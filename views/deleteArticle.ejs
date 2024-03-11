@@ -1,0 +1,14 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete article</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete <%= article.title %> in the sub <%= article.sub_name %></h1>
+    <form action="/articles/delete/<%= article.id %>" method="post">
+    <button type="submit"> Yes </button>
+    <button><a href="/articles/view/<%= article.id %>">Never mind!</a></button>
+    </form>
+</body>
+</html>

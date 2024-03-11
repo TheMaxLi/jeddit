@@ -1,0 +1,16 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Sub</title>
+</head>
+<body>
+    <%- include('header', {session: session}); %>
+    <form action="/subs/create" method="post">
+        <label for="subname">Enter a sub name: </label>
+        <input type="text" name="subname" id="subname">
+        <br>
+        <button type="submit">Create sub</button>
+    </form>
+</body>
+</html>

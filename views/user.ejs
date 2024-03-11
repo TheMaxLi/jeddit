@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= jedditInfo.username %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include('header', {session: jedditInfo.session}); %>
+    <h1><%= jedditInfo.username %></h1>
+    <form action="/users/profile/<%= jedditInfo.username %>" method="get">
+        <label for="ordering">Order by:
+            <select name="ordering">
+                <option value="Top">Top</option> 
+                <option value="New">New</option> 
+                <option value="Old">Old</option> 
+                <option value="Ragebait">Ragebait</option> 
+            </select>
+        </label>
+        <button type="submit">REORDER!</button>
+    </form>
+    <h3>All articles:</h3>
+    <% for (let article of jedditInfo.allArticles) { %>
+        <div class="box">
+            <p>
+                <%= article.voteCount %>
+                    <% if (jedditInfo.session.username) { %>
+                        <div>
+                            <form action="/articles/vote/<%= article.id %>/1" method="post">
+                                <button type="submit" class="<%= article.voted %> upvote">↑</button>
+                            </form>
+                            <form action="/articles/vote/<%= article.id %>/-1" method="post">
+                                <button type="submit"class="<%= article.voted %> downvote">↓</button>
+                            </form>
+                        </div>
+                    <% } %>
+                <a href="/articles/view/<%= article.id %>"><%= article.title %></a>
+            </p>
+        </div>
+        <br>
+    <% } %>
+
+    <h3>All comments:</h3>
+    <% for (comment of jedditInfo.allComments) { %>
+        <div class="box">
+            <%= comment.voteCount %>
+                <% if (jedditInfo.user) { %>
+                    <div>
+                        <form action="/comments/vote/<%= comment.id %>/1" method="post">
+                            <button type="submit" class="<%= comment.voted %> upvote">↑</button>
+                        </form>
+                        <form action="/comments/vote/<%= comment.id %>/-1" method="post">
+                            <button type="submit"class="<%= comment.voted %> downvote">↓</button>
+                        </form>
+                    </div>
+                <% } %>
+            <p>at <%= comment.date %>: <a href="/articles/view/<%= comment.article_id %>"><%= comment.text %></a></p>
+        </div>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,30 @@
+.upvoted.upvote {
+  background-color: rgb(115, 222, 115);
+}
+.downvoted.downvote {
+  background-color: rgb(212, 110, 110);
+}
+
+.box p,
+.box a,
+.box i {
+  display: inline-block;
+}
+
+.box div {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+
+.box form {
+  display: block;
+}
+
+.box button {
+  display: block;
+  width: 100%;
+  margin-bottom: -5px;
+  margin-top: -5px;
+}

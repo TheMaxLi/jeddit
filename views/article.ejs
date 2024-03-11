@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= jedditInfo.article.name %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include('header', {session: jedditInfo.session}); %>
+    <div>
+        <a href="/subs/show/<%= jedditInfo.article.sub_name %>">go back to <%= jedditInfo.article.sub_name %></a>
+        <h1>
+            <%= jedditInfo.article.title %>
+        </h1>
+        <h2>
+            <% if (jedditInfo.linkImg) { %>
+                <img src="<%= jedditInfo.article.link %>" alt="this is a image that the user linked under <%= jedditInfo.article.link %>" style="height: 300px;">
+            <% } else { %>
+                <a href="<%= jedditInfo.article.link %>"><%= jedditInfo.article.link %></a>
+            <% } %>
+        </h2>
+            <%= jedditInfo.article.text %>
+        <p>
+            posted by <a href="/users/profile/<%= jedditInfo.article.creator %>"><%= jedditInfo.article.creator %></a>
+        </p>
+    </div>
+    <div>
+        <h2>Comments</h2>
+        <form action="/articles/view/<%= jedditInfo.article.id %>" method="get">
+            <label for="ordering">Order by:
+                <select name="ordering">
+                    <option value="Top">Top</option> 
+                    <option value="New">New</option> 
+                    <option value="Old">Old</option> 
+                    <option value="Ragebait">Ragebait</option> 
+                </select>
+            </label>
+            <button type="submit">REORDER!</button>
+        </form>
+        <% for (comment of jedditInfo.userComments) { %>
+            <div class="box">
+                <p>
+                    <%= comment.voteCount %>
+                    <% if (jedditInfo.user) { %>
+                        <div>
+                            <form action="/comments/vote/<%= comment.id %>/1" method="post">
+                                <button type="submit" class="<%= comment.voted %> upvote">↑</button>
+                            </form>
+                            <form action="/comments/vote/<%= comment.id %>/-1" method="post">
+                                <button type="submit"class="<%= comment.voted %> downvote">↓</button>
+                            </form>
+                        </div>
+                    <% } %>
+                    <a href="/users/profile/<%= comment.creator %>"><%= comment.creator %></a> 
+                    at <i><%= comment.date %></i>: 
+                    <%= comment.text %> 
+                    <% if (jedditInfo.user) { %>
+                        <% if (comment.creator_id === jedditInfo.user.id) { %>
+                            <a href="/comments/edit/<%= comment.id %>">Edit</a>
+                            <a href="/comments/delete/<%= comment.id %>">Delete</a>
+                        <% } %>
+                    <% } %>
+                </p>
+            </div><br>
+        <% } %>
+    </div>
+    <div>
+        <% if(jedditInfo.user) { %>
+            <br>
+            <p>Make Your Own Comment</p>
+            <form action="/comments/create/<%= jedditInfo.article.id %>" method="post">
+                <textarea name="comment" cols="30" rows="4"></textarea>
+                <br><br>
+                <button type="submit">Comment</button>
+            </form>
+        <% } %>
+    </div>
+    <div>
+        <% if (jedditInfo.user) { %>
+            <% if (jedditInfo.article.creator === jedditInfo.user.username) { %>
+                <br>
+                <button>
+                    <a href="/articles/edit/<%= jedditInfo.article.id %>">Edit this article</a>
+                </button>
+                <button>
+                    <a href="/articles/delete/<%= jedditInfo.article.id %>">Delete this article</a>
+                </button>
+            <% } %>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit comment</title>
+</head>
+<body>
+    <h1>Edit comment</h1>
+    <form action="/comments/edit/<%= comment.id %>" method="post">
+    <textarea name="content" cols="30" rows="4"><%= comment.text %></textarea>
+    <br><br>
+    <button type="submit">Update Comment!</button>
+    <br><br>
+    <button><a href="/articles/view/<%= comment.article_id %>">Never Mind</a></button>
+    </form>
+</body>
+</html>

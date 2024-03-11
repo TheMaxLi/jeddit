@@ -1,0 +1,11 @@
+<button><a href="/debug">Debug page</a></button>
+<button><a href="/">Go Home</a></button>
+    <% if (session.username) { %>
+        <p>Welcome: <a href="/users/profile/<%= session.username %>"><%= session.username %></a></p>
+        <form action="/users/logout" method="post">
+            <button type="submit">Logout</button>
+        </form>
+        <% } else { %>
+            <button><a href="/users/login">Login</a></button>
+            <button><a href="/users/signup">Sign Up</a></button>       
+    <% } %>

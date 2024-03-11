@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= jedditInfo.sub.name %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include('header', {session: jedditInfo.session}); %>
+    <h1>Welcome to <i><%= jedditInfo.sub.name %></i></h1>
+    <form action="/subs/show/<%= jedditInfo.sub.name %>" method="get">
+        <label for="ordering">Order by:
+            <select name="ordering">
+                <option value="Top">Top</option> 
+                <option value="New">New</option> 
+                <option value="Old">Old</option> 
+                <option value="Ragebait">Ragebait</option> 
+            </select>
+        </label>
+        <button type="submit">REORDER!</button>
+    </form>
+    <h2>Top Articles</h2>
+    <ul>
+        <% for (article of jedditInfo.matchingArticles) { %>
+            <li class="box">
+                <p>
+                    <%= article.voteCount %>
+                        <% if (jedditInfo.session.username) { %>
+                            <div>
+                                <form action="/articles/vote/<%= article.id %>/1" method="post">
+                                    <button type="submit" class="<%= article.voted %> upvote">↑</button>
+                                </form>
+                                <form action="/articles/vote/<%= article.id %>/-1" method="post">
+                                    <button type="submit"class="<%= article.voted %> downvote">↓</button>
+                                </form>
+                            </div>
+                        <% } %>
+                    <a href="/articles/view/<%= article.id %>"><%= article.title %></a>
+                </p>
+            </li>
+            <br>
+        <% } %>
+    </ul>
+    <% if (jedditInfo.session.username) { %>
+        <button><a href="/articles/create/<%= jedditInfo.sub.name %>">Create article in <%= jedditInfo.sub.name %></a></button>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete comment</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete this comment?</h1>
+    <form action="/comments/delete/<%= jedditInfo.commentId %>" method="post">
+        <button type="submit">Delete</button>
+        <button><a href="/articles/view/<%= jedditInfo.articleId %>">Never mind</a></button>
+    </form>
+</body>
+</html>
